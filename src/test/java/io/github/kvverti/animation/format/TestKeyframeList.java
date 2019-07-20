@@ -59,61 +59,61 @@ public class TestKeyframeList {
     @DisplayName("Keyframe from beginning")
     public void testFirstKeyframe() {
         keyframes.getData(0.0f, view);
-        assertEquals(0.0f, view.fraction(), 0.0001, "keyframe fraction");
-        assertEquals(0.0f, view.getValue(0, 0), 0.001, "data[0,0]");
-        assertEquals(0.0f, view.getValue(-1, 0), 0.001, "data[-1,0]");
-        assertEquals(3.0f, view.getValue(4, 0), 0.001, "data[4,0]");
-        assertEquals(4.0f, view.getValue(0, 1), 0.001, "data[0,1]");
-        assertEquals(1.0f, view.getValue(1, 0), 0.001, "data[1,0]");
+        assertEquals(0.0f, view.frac(), 0.0001, "keyframe fraction");
+        assertEquals(0.0f, view.get(0, 0), 0.001, "data[0,0]");
+        assertEquals(0.0f, view.get(-1, 0), 0.001, "data[-1,0]");
+        assertEquals(3.0f, view.get(4, 0), 0.001, "data[4,0]");
+        assertEquals(4.0f, view.get(0, 1), 0.001, "data[0,1]");
+        assertEquals(1.0f, view.get(1, 0), 0.001, "data[1,0]");
     }
 
     @Test
     @DisplayName("Keyframe in middle")
     public void testMiddleKeyframe() {
         keyframes.getData(0.6f, view);
-        assertEquals(0.2f, view.fraction(), 0.001, "keyframe fraction");
-        assertEquals(1.0f, view.getValue(0, 0), 0.001, "data[0,0]");
-        assertEquals(0.0f, view.getValue(-1, 0), 0.001, "data[-1,0]");
-        assertEquals(3.0f, view.getValue(4, 0), 0.001, "data[4,0]");
-        assertEquals(5.0f, view.getValue(0, 1), 0.001, "data[0,1]");
-        assertEquals(2.0f, view.getValue(1, 0), 0.001, "data[1,0]");
-        assertThrows(IllegalArgumentException.class, () -> view.getValue(0, -1));
-        assertThrows(IllegalArgumentException.class, () -> view.getValue(0, 4));
+        assertEquals(0.2f, view.frac(), 0.001, "keyframe fraction");
+        assertEquals(1.0f, view.get(0, 0), 0.001, "data[0,0]");
+        assertEquals(0.0f, view.get(-1, 0), 0.001, "data[-1,0]");
+        assertEquals(3.0f, view.get(4, 0), 0.001, "data[4,0]");
+        assertEquals(5.0f, view.get(0, 1), 0.001, "data[0,1]");
+        assertEquals(2.0f, view.get(1, 0), 0.001, "data[1,0]");
+        assertThrows(IllegalArgumentException.class, () -> view.get(0, -1));
+        assertThrows(IllegalArgumentException.class, () -> view.get(0, 4));
     }
 
     @Test
     @DisplayName("Exact keyframe in middle")
     public void testMiddleKeyframeExact() {
         keyframes.getData(0.5f, view);
-        assertEquals(0.0f, view.fraction(), 0.001, "keyframe fraction");
-        assertEquals(1.0f, view.getValue(0, 0), 0.001, "data[0,0]");
-        assertEquals(0.0f, view.getValue(-1, 0), 0.001, "data[-1,0]");
-        assertEquals(3.0f, view.getValue(4, 0), 0.001, "data[4,0]");
-        assertEquals(5.0f, view.getValue(0, 1), 0.001, "data[0,1]");
-        assertEquals(2.0f, view.getValue(1, 0), 0.001, "data[1,0]");
+        assertEquals(0.0f, view.frac(), 0.001, "keyframe fraction");
+        assertEquals(1.0f, view.get(0, 0), 0.001, "data[0,0]");
+        assertEquals(0.0f, view.get(-1, 0), 0.001, "data[-1,0]");
+        assertEquals(3.0f, view.get(4, 0), 0.001, "data[4,0]");
+        assertEquals(5.0f, view.get(0, 1), 0.001, "data[0,1]");
+        assertEquals(2.0f, view.get(1, 0), 0.001, "data[1,0]");
     }
 
     @Test
     @DisplayName("Keyframe at end")
     public void testEndKeyframe() {
         keyframes.getData(1.5f, view);
-        assertEquals(1.0f, view.fraction(), 0.001, "keyframe fraction");
-        assertEquals(2.0f, view.getValue(0, 0), 0.001, "data[0,0]");
-        assertEquals(1.0f, view.getValue(-1, 0), 0.001, "data[-1,0]");
-        assertEquals(3.0f, view.getValue(4, 0), 0.001, "data[4,0]");
-        assertEquals(6.0f, view.getValue(0, 1), 0.001, "data[0,1]");
-        assertEquals(3.0f, view.getValue(1, 0), 0.001, "data[1,0]");
+        assertEquals(1.0f, view.frac(), 0.001, "keyframe fraction");
+        assertEquals(2.0f, view.get(0, 0), 0.001, "data[0,0]");
+        assertEquals(1.0f, view.get(-1, 0), 0.001, "data[-1,0]");
+        assertEquals(3.0f, view.get(4, 0), 0.001, "data[4,0]");
+        assertEquals(6.0f, view.get(0, 1), 0.001, "data[0,1]");
+        assertEquals(3.0f, view.get(1, 0), 0.001, "data[1,0]");
     }
 
     @Test
     @DisplayName("Keyframe past end")
     public void testPastEndKeyframe() {
         keyframes.getData(2.0f, view);
-        assertEquals(1.0f, view.fraction(), 0.001, "keyframe fraction");
-        assertEquals(2.0f, view.getValue(0, 0), 0.001, "data[0,0]");
-        assertEquals(1.0f, view.getValue(-1, 0), 0.001, "data[-1,0]");
-        assertEquals(3.0f, view.getValue(4, 0), 0.001, "data[4,0]");
-        assertEquals(6.0f, view.getValue(0, 1), 0.001, "data[0,1]");
-        assertEquals(3.0f, view.getValue(1, 0), 0.001, "data[1,0]");
+        assertEquals(1.0f, view.frac(), 0.001, "keyframe fraction");
+        assertEquals(2.0f, view.get(0, 0), 0.001, "data[0,0]");
+        assertEquals(1.0f, view.get(-1, 0), 0.001, "data[-1,0]");
+        assertEquals(3.0f, view.get(4, 0), 0.001, "data[4,0]");
+        assertEquals(6.0f, view.get(0, 1), 0.001, "data[0,1]");
+        assertEquals(3.0f, view.get(1, 0), 0.001, "data[1,0]");
     }
 }
