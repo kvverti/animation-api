@@ -19,8 +19,8 @@ public final class KeyframeList {
     private final float[] times;
 
     /**
-     * An array of keyframe values. Each triplet of values represents a
-     * transformation.
+     * An array of keyframe values. The keyframe data are stored in parallel
+     * form, i.e. all of the x values followed by all of the y values, etc.
      */
     private final float[] data;
 
@@ -28,23 +28,22 @@ public final class KeyframeList {
         checkNotNull(times, "times must be nonnull");
         checkNotNull(data, "data must be nonnull");
         checkArgument(times.length != 0, "time must be nonempty");
-        checkArgument(times.length * 3 == data.length, "times and data must be parallel");
+        checkArgument(data.length % times.length == 0, "times and data must be parallel");
         checkArgument(times[0] == 0.0f, "Keyframes must start at 0.0f");
         this.times = times;
         this.data  = data;
     }
 
     /**
-     * Calculates the adjacent keyframes to the given time, and places the data
-     * into the parameters `floor` and `ceil`. Returns the fraction of `time`
-     * relative to the two keyframes. This method does not check arguments, as
-     * it is expected to be called many times on each render tick.
+     * Calculates the adjacent keyframes to the given time, and returns the
+     * fractional keyframe index. It is expected that this method will
+     * be called many times on each render tick.
      *
-     * @param time a nonnegative int representing the animation time
-     * @param floor a float[3] to hold the lower keyframe
-     * @param ceil a float[3] to hold the upper keyframe
+     * @param time a nonnegative float representing the animation time
+     * @param dst a view into which a neighborhood of keyframe data will
+     *     be put.
      */
-    public float getData(float time, float[] floor, float[] ceil) {
+    public void getData(float time, DataView dst) {
         int idx = Arrays.binarySearch(times, time);
         if(idx < 0) {
             idx = -idx - 2; // get the lower index
@@ -55,8 +54,6 @@ public final class KeyframeList {
         }
         int flr = idx;
         int cil = idx + 1;
-        System.arraycopy(data, 3 * flr, floor, 0, 3);
-        System.arraycopy(data, 3 * cil, ceil, 0, 3);
-        return (time - times[flr]) / (times[cil] - times[flr]);
+        dst.assign(times.length, data, idx, (time - times[flr]) / (times[cil] - times[flr]));
     }
 }
