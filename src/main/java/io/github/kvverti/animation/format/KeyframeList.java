@@ -35,15 +35,43 @@ public final class KeyframeList {
     }
 
     /**
+     * Returns the keyframe time at the given index.
+     */
+    public float time(int idx) {
+        return times[idx];
+    }
+
+    /**
+     * Returns the number of keyframes.
+     */
+    public int size() {
+        return times.length;
+    }
+
+    /**
+     * Returns the keyframe value field at the given index.
+     */
+    public float datum(int idx, int valIdx) {
+        return data[times.length * valIdx + idx];
+    }
+
+    /**
+     * Returns the number of data associated with each keyframe.
+     */
+    public int dataSize() {
+        return data.length / times.length;
+    }
+
+    /**
      * Calculates the adjacent keyframes to the given time, and returns the
      * fractional keyframe index. It is expected that this method will
      * be called many times on each render tick.
      *
      * @param time a nonnegative float representing the animation time
-     * @param dst a view into which a neighborhood of keyframe data will
-     *     be put.
+     * @return the fractional keyframe index. For example, 1.5 is 0.5 between
+     *     keyframes 1 and 2.
      */
-    public void getData(float time, DataView dst) {
+    public float getTimeIndex(float time) {
         int idx = Arrays.binarySearch(times, time);
         if(idx < 0) {
             idx = -idx - 2; // get the lower index
@@ -54,6 +82,6 @@ public final class KeyframeList {
         }
         int flr = idx;
         int cil = idx + 1;
-        dst.assign(times.length, data, idx, (time - times[flr]) / (times[cil] - times[flr]));
+        return idx + (time - times[flr]) / (times[cil] - times[flr]);
     }
 }
