@@ -1,5 +1,7 @@
 package io.github.kvverti.animation.format;
 
+import com.google.common.annotations.VisibleForTesting;
+
 import java.util.Arrays;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -24,7 +26,8 @@ public final class KeyframeList {
      */
     private final float[] data;
 
-    KeyframeList(float[] times, float[] data) {
+    @VisibleForTesting
+    public KeyframeList(float[] times, float[] data) {
         checkNotNull(times, "times must be nonnull");
         checkNotNull(data, "data must be nonnull");
         checkArgument(times.length != 0, "time must be nonempty");
