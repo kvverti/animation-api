@@ -1,0 +1,10 @@
+[
+    {
+        "byteLength": 15,
+        "uri": "hello.bin"
+    },
+    {
+        "byteLength": 19,
+        "uri": "abcd.bin"
+    }
+]
