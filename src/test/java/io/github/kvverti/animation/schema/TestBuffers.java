@@ -7,7 +7,6 @@ import com.google.gson.JsonIOException;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.nio.ByteBuffer;
 
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
@@ -33,7 +32,7 @@ public class TestBuffers {
         wd = new Identifier(WD);
     }
 
-    private ByteBuffer[] storage(String resource) throws IOException {
+    private byte[][] storage(String resource) throws IOException {
         JsonArray json;
         try(Resource rsc = manager.getResource(new Identifier(WD + resource))) {
             Reader rd = new InputStreamReader(rsc.getInputStream());
@@ -45,24 +44,21 @@ public class TestBuffers {
     @Test
     @DisplayName("Single buffer")
     public void testSingleBuffer() throws IOException {
-        ByteBuffer[] storage = storage("buffer/correct.json");
+        byte[][] storage = storage("buffer/correct.json");
         byte[] expected = "hello_world_lol".getBytes();
-        byte[] actual = expected.clone();
-        storage[0].get(actual);
+        byte[] actual = storage[0];
         assertArrayEquals(expected, actual, "hello.bin");
     }
 
     @Test
     @DisplayName("Multiple buffer")
     public void testMultiBuffer() throws IOException {
-        ByteBuffer[] storage = storage("buffer/multi.json");
+        byte[][] storage = storage("buffer/multi.json");
         byte[] expected = "hello_world_lol".getBytes();
-        byte[] actual = expected.clone();
-        storage[0].get(actual);
+        byte[] actual = storage[0];
         assertArrayEquals(expected, actual, "hello.bin");
         expected = "abcd efgh ijkl ``~~".getBytes();
-        actual = expected.clone();
-        storage[1].get(actual);
+        actual = storage[1];
         assertArrayEquals(expected, actual, "abcd.bin");
     }
 

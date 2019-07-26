@@ -6,7 +6,6 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
 
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
@@ -26,9 +25,9 @@ public final class Buffers {
      * Intakes the buffers from the given JSON object. The buffer URIs are
      * resolved relative to the given context.
      */
-    public static ByteBuffer[] fromJson(ResourceManager manager, Identifier path, JsonArray json) {
+    public static byte[][] fromJson(ResourceManager manager, Identifier path, JsonArray json) {
         int len = json.size();
-        ByteBuffer[] buffers = new ByteBuffer[len];
+        byte[][] buffers = new byte[len][];
         int i = 0;
         for(JsonElement elem : json) {
             JsonObject obj = elem.getAsJsonObject();
@@ -42,7 +41,7 @@ public final class Buffers {
                     log.error("{}: bytelength = {}, but file length = {}", id, blen, bytesRead);
                     throw new SchemaException("bytes read not equal to bytes expected");
                 }
-                buffers[i] = ByteBuffer.wrap(arr);
+                buffers[i] = arr;
             } catch(IOException e) {
                 log.error("Could not read buffer {}", id);
                 throw new JsonIOException("Unable to read buffer", e);
