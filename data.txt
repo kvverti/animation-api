@@ -1,0 +1,8 @@
+Keyframes:
+    Map of times -> values (angles, scales, offsets)
+
+Samplers:
+    Keyframes + interpolation
+
+Channels:
+    Sampler + bone + transform type
